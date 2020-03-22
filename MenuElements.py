@@ -8,6 +8,8 @@ class Menu(object):
         self.text_color = text_color
         self.font_name = font_name
 
+        self.button_index = 0
+
         self.elements = {}
         self.texts = {}
         self.buttons = {}
@@ -18,6 +20,25 @@ class Menu(object):
                         self.font_name, font_size, sprite)
         self.elements[name] = new_text
         self.texts[name] = new_text
+
+    def add_button(self, name: str, pos_center: tuple, label: str, font_size: int,
+                   sprite_inactive, sprite_hovered, sprite_clicked, on_click):
+        new_button = Button(self.screen, pos_center, label, self.text_color, self.font_name,
+                            font_size, self.button_index, sprite_inactive, sprite_hovered,
+                            sprite_clicked, on_click)
+        self.button_index += 1
+        self.elements[name] = new_button
+        self.buttons[name] = new_button
+
+    def add_selector(self, name: str, pos_center: tuple, labels: list, font_size: int,
+                     sprite_text, sprite_inactive, sprite_hovered, sprite_clicked,
+                     on_left_click, on_right_click):
+        new_selector = Selector(self.screen, pos_center, labels, self.text_color, self.font_name,
+                                font_size, self.button_index, sprite_text, sprite_inactive,
+                                sprite_hovered, sprite_clicked, on_left_click, on_right_click)
+        self.button_index += 1
+        self.elements[name] = new_selector
+        self.selectors[name] = new_selector
 
 
 class Element(object):

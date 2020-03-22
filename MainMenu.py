@@ -46,10 +46,6 @@ class MainMenu(GameState):
 
         self.selected_button = 0
 
-        self.title_font = pg.font.Font("minesweeper.ttf", 34)
-        self.button_font_large = pg.font.Font("minesweeper.ttf", 32)
-        self.button_font_small = pg.font.Font("minesweeper.ttf", 22)
-
         self.font_name = "minesweeper.ttf"
         self.font_size_title = 34
         self.fontSizeButtonLarge = 32
