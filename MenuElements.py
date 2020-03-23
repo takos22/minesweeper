@@ -1,4 +1,5 @@
 import pygame as pg
+from pygame.locals import *
 
 
 class Menu(object):
@@ -14,6 +15,32 @@ class Menu(object):
         self.texts = {}
         self.buttons = {}
         self.selectors = {}
+
+    def get_event(self, event):
+        if self.texts:
+            for text in self.texts.values:
+                text.get_event(event)
+
+        if self.buttons:
+            for button in self.buttons.values:
+                button.get_event(event)
+
+        if self.selectors:
+            for selector in self.selectors.values:
+                selector.get_event(event)
+
+    def draw(self):
+        if self.texts:
+            for text in self.texts.values:
+                text.draw()
+
+        if self.buttons:
+            for button in self.buttons.values:
+                button.draw()
+
+        if self.selectors:
+            for selector in self.selectors.values:
+                selector.draw()
 
     def add_text(self, name: str, pos_center: tuple, label: str, font_size: int, sprite=None):
         new_text = Text(self.screen, pos_center, label, self.text_color,
@@ -50,6 +77,35 @@ class Element(object):
         self.font_name = font_name
         self.font_size = font_size
         self.font = pg.font.Font(self.font_name, self.font_size)
+
+        self.mouse_click = False
+        self.mouse_released = True
+        self.return_click = False
+        self.return_released = True
+
+    def get_event(self, event):
+        if event.type == KEYDOWN:
+            if event.key == K_RETURN:
+                self.return_click = True
+                self.return_released = False
+
+            elif event.key == K_DOWN:
+                self.selected_button += 1
+            elif event.key == K_UP:
+                self.selected_button -= 1
+
+        elif event.type == KEYUP:
+            if event.key == K_RETURN:
+                self.return_released = True
+
+        elif event.type == MOUSEBUTTONDOWN:
+            if event.button == BUTTON_LEFT:
+                self.mouse_click = True
+                self.mouse_released = False
+
+        elif event.type == MOUSEBUTTONUP:
+            if event.button == BUTTON_LEFT:
+                self.mouse_released = True
 
     def draw(self):
         pass
